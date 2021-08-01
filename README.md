@@ -22,9 +22,9 @@ How to run NanoNet:
 
                     -n <path to trained NanoNet> : a path to the trained model, default is 'NanoNet'.
                     -s : write all the models into a single PDB file, separated with MODEL and ENDMDL (reduces running time when predicting many structures), default is False.
-                    -o <output directory> : path to a directory to put the generated models in, default is '.'
+                    -o <output directory> : path to a directory to put the generated models in, default is './NanoNetResults'
                     -r : reconstruct side chains with pulchra, default is False
                     -p <pulchra> : path to pulchra executable, in order to reconstruct the side chains, default is 'pulchra'
 
 
-Running time: under 20 seconds for 5,000 models written into a single PDB file, or under a minute written into separate PDB files.
+Running time: under 20 seconds for 5,000 models written into a single PDB file, or under a minute written into separate PDB files on a standart CPU computer. for better preformance use GPU and cuda.

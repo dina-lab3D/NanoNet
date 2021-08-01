@@ -113,7 +113,7 @@ if __name__ == '__main__':
     # check arguments
     fasta_path = args.fasta
     nanonet_path = args.nanonet if args.nanonet else "NanoNet"
-    output_dir = args.output_dir if args.output_dir else "."
+    output_dir = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
     run_pulchra = args.pulchra if args.pulchra else "pulchra"
 
     if not os.path.exists(fasta_path):

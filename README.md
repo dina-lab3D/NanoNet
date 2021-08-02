@@ -2,17 +2,18 @@
 
 NanoNet - a rapid nanobody modeling tool
 
-How to run NanoNet:
+How to run NanoNet localy:
 
-    1. make sure you have the following libraries installed in your environment:
+    1. Clone the git repository : git clone "https://github.com/dina-lab3D/NanoNet"
+    2. Make sure you have the following libraries installed in your environment:
 
             - numpy
             - tensorflow (2.4.0 or higher)
             - Bio
 
-    2. if you want to construct the side chains, make sure you have 'pulchra' installed on your computer (https://www.pirx.com/pulchra/)
+    3. If you want to construct the side chains, make sure you have 'pulchra' installed on your computer (https://www.pirx.com/pulchra/)
 
-    2. run the following command (with python 3):
+    4. Run the following command (with python 3):
 
             python NanoNet.py <fasta file path>
 

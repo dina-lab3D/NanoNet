@@ -98,31 +98,8 @@ def matrix_to_pdb(pdb_file, seq, coord_matrix, pdb_name):
     pdb_file.write(END_LINE)
 
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("fasta", help="fasta file with Nbs sequences")
-    parser.add_argument("-n", "--nanonet", help="path to NanoNet trained network (default: NanoNet)", type=str)
-    parser.add_argument("-s", "--single_file", help="write all the models into a single PDB file with different models (good when predicting many structures, default: False)", action="store_true")
-    parser.add_argument("-o", "--output_dir", help="directory to put the predicted PDB models, (default: .)", type=str)
-    parser.add_argument("-r", "--reconstruct", help="reconstruct the side chains using pulchra, (default: False)", action="store_true")
-    parser.add_argument("-p", "--pulchra", help="path to pulchra executable, in order to reconstruct the side chains, (default: pulchra)", type=str)
-    args = parser.parse_args()
-    start = timer()
-
-    # check arguments
-    fasta_path = args.fasta
-    nanonet_path = args.nanonet if args.nanonet else "NanoNet"
-    output_dir = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
-    run_pulchra = args.pulchra if args.pulchra else "pulchra"
-
-    if not os.path.exists(fasta_path):
-        print("Fasta file '{}' does not exist, aborting.".format(args.fasta), file=sys.stderr)
-        exit(1)
-    if not os.path.exists(nanonet_path):
-        print("Trained NanoNet '{}' does not exist, aborting.".format(args.nanonet), file=sys.stderr)
-        exit(1)
-
+def run_nanonet(fasta_path, nanonet_path, output_dir, reconstruct, run_pulchra):
+    
     # make input for NanoNet
     sequences = []
     names = []
@@ -155,7 +132,7 @@ if __name__ == '__main__':
                 ca_file.write("MODEL {}\n".format(name))
                 matrix_to_pdb(ca_file, sequence, coords, name)
                 ca_file.write("ENDMDL\n")
-        if args.reconstruct:
+        if reconstruct:
             subprocess.run("{} {}".format(run_pulchra, ca_file_name), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 
     # create many ca pdb files
@@ -165,8 +142,37 @@ if __name__ == '__main__':
             with open(ca_file_name, "w") as ca_file:
                 ca_file.write(HEADER.format(name))
                 matrix_to_pdb(ca_file, sequence, coords, name)
-            if args.reconstruct:
+            if reconstruct:
                 subprocess.run("{} {}".format(run_pulchra, ca_file_name), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("fasta", help="fasta file with Nbs sequences")
+    parser.add_argument("-n", "--nanonet", help="path to NanoNet trained network (default: NanoNet)", type=str)
+    parser.add_argument("-s", "--single_file", help="write all the models into a single PDB file with different models (good when predicting many structures, default: False)", action="store_true")
+    parser.add_argument("-o", "--output_dir", help="directory to put the predicted PDB models, (default: .)", type=str)
+    parser.add_argument("-r", "--reconstruct", help="reconstruct the side chains using pulchra, (default: False)", action="store_true")
+    parser.add_argument("-p", "--pulchra", help="path to pulchra executable, in order to reconstruct the side chains, (default: pulchra)", type=str)
+    args = parser.parse_args()
+
+    # check arguments
+    fasta_path = args.fasta
+    nanonet_path = args.nanonet if args.nanonet else "NanoNet"
+    output_dir = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
+    run_pulchra = args.pulchra if args.pulchra else "pulchra"
+
+    if not os.path.exists(fasta_path):
+        print("Fasta file '{}' does not exist, aborting.".format(args.fasta), file=sys.stderr)
+        exit(1)
+    if not os.path.exists(nanonet_path):
+        print("Trained NanoNet '{}' does not exist, aborting.".format(args.nanonet), file=sys.stderr)
+        exit(1)
+           
+    start = timer()
+    run_nanonet(fasta_path, nanonet_path, output_dir, args.reconstruct, run_pulchra)
     end = timer()
+
     print("NanoNet ended successfully, models are located in directory:'{}', total time : {}.".format(output_dir, end - start))

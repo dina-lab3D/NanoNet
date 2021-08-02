@@ -2,7 +2,15 @@
 
 NanoNet - a rapid nanobody modeling tool
 
-How to run NanoNet localy:
+
+How to run NanoNet from google Colaboratory:
+
+    1. Just make a copy of the Colab notebook (NanoNet.ipynb) in your drive.
+    2. Provide Nb sequence/fasta.
+    3. Press the 'Run all' option.
+
+
+How to run NanoNet locally:
 
     1. Clone the git repository : git clone "https://github.com/dina-lab3D/NanoNet"
     2. Make sure you have the following libraries installed in your environment:

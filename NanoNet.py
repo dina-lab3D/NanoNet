@@ -98,7 +98,7 @@ def matrix_to_pdb(pdb_file, seq, coord_matrix, pdb_name):
     pdb_file.write(END_LINE)
 
 
-def run_nanonet(fasta_path, nanonet_path, output_dir, reconstruct, run_pulchra):
+def run_nanonet(fasta_path, nanonet_path, single_file, output_dir, reconstruct, run_pulchra):
     
     # make input for NanoNet
     sequences = []
@@ -124,7 +124,7 @@ def run_nanonet(fasta_path, nanonet_path, output_dir, reconstruct, run_pulchra):
     os.chdir(output_dir)
 
     # create one ca pdb file
-    if args.single_file:
+    if single_file:
         ca_file_name = "nanonet_ca.pdb"
         with open(ca_file_name, "w") as ca_file:
             ca_file.write(HEADER.format(""))
@@ -172,7 +172,7 @@ if __name__ == '__main__':
         exit(1)
            
     start = timer()
-    run_nanonet(fasta_path, nanonet_path, output_dir, args.reconstruct, run_pulchra)
+    run_nanonet(fasta_path, nanonet_path, args.single_file, output_dir, args.reconstruct, run_pulchra)
     end = timer()
 
     print("NanoNet ended successfully, models are located in directory:'{}', total time : {}.".format(output_dir, end - start))

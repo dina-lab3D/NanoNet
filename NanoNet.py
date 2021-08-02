@@ -121,29 +121,30 @@ def run_nanonet(fasta_path, nanonet_path, single_file, output_dir, reconstruct, 
     # change to output directory
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    os.chdir(output_dir)
 
     # create one ca pdb file
     if single_file:
         ca_file_name = "nanonet_ca.pdb"
-        with open(ca_file_name, "w") as ca_file:
+        ca_file_path = os.path.join(output_dir, ca_file_name)
+        with open(ca_file_path, "w") as ca_file:
             ca_file.write(HEADER.format(""))
             for coords, sequence, name in zip(ca_coords, sequences, names):
                 ca_file.write("MODEL {}\n".format(name))
                 matrix_to_pdb(ca_file, sequence, coords, name)
                 ca_file.write("ENDMDL\n")
         if reconstruct:
-            subprocess.run("{} {}".format(run_pulchra, ca_file_name), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            subprocess.run("{} {}".format(run_pulchra, ca_file_path), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 
     # create many ca pdb files
     else:
         for coords, sequence, name in zip(ca_coords, sequences, names):
             ca_file_name = "{}_nanonet_ca.pdb".format(name)
-            with open(ca_file_name, "w") as ca_file:
+            ca_file_path = os.path.join(output_dir, ca_file_name)
+            with open(ca_file_path, "w") as ca_file:
                 ca_file.write(HEADER.format(name))
                 matrix_to_pdb(ca_file, sequence, coords, name)
             if reconstruct:
-                subprocess.run("{} {}".format(run_pulchra, ca_file_name), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                subprocess.run("{} {}".format(run_pulchra, ca_file_path), shell=True, stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 
 
 

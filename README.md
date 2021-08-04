@@ -6,9 +6,10 @@ NanoNet - a rapid nanobody modeling tool
 How to run NanoNet from google Colaboratory:
 
     1. Just make a copy of the Colab notebook (NanoNet.ipynb) in your drive.
-    2. Provide Nb sequence/fasta.
-    3. Press the 'Run all' option.
-
+    2. select protein type (Nb/mAb heavy chain or TCR VB).
+    3. select input type (sequence or path to a fasta file)
+    4. Provide Nb sequence/fasta.
+    5. Press the 'Run all' option.
 
 How to run NanoNet locally:
 

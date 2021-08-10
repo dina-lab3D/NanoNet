@@ -30,7 +30,7 @@ How to run NanoNet locally:
 
             options:
 
-                    -n <path to trained NanoNet> : a path to the trained model, default is 'NanoNet'.
+                    -n <path to trained NanoNet> : a path to the trained model, default is 'NanoNet' (for TCR modeling use the path of 'NanoNetTCR')
                     -s : write all the models into a single PDB file, separated with MODEL and ENDMDL (reduces running time when predicting many structures), default is False.
                     -o <output directory> : path to a directory to put the generated models in, default is './NanoNetResults'
                     -r : reconstruct side chains with pulchra, default is False

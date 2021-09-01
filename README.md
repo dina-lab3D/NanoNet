@@ -21,7 +21,7 @@ How to run NanoNet locally:
             - tensorflow (2.4.0 or higher)
             - Bio
 
-    3. If you want to construct the side chains, make sure you have 'pulchra' installed on your computer (https://www.pirx.com/pulchra/)
+    3. If you want to construct the side chains, make sure you have 'PULCHRA' installed and compiled on your computer (https://www.pirx.com/pulchra/).
 
     4. Run the following command (with python 3):
 
@@ -35,7 +35,7 @@ How to run NanoNet locally:
                     -s : write all the models into a single PDB file, separated with MODEL and ENDMDL (reduces running time when predicting many structures), default is False.
                     -o <output directory> : path to a directory to put the generated models in, default is './NanoNetResults'
                     -r : reconstruct side chains with pulchra, default is False
-                    -p <pulchra> : path to pulchra executable, in order to reconstruct the side chains, default is 'pulchra'
+                    -p <pulchra> : path to pulchra executable, in order to reconstruct the side chains, default is './pulchra_306/pulchra'
 
 
 Running time: under 20 seconds for 5,000 models written into a single PDB file, or under a minute written into separate PDB files on a standart CPU computer. for better preformance use GPU and cuda.

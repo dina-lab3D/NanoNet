@@ -1,6 +1,7 @@
 # NanoNet
 
-NanoNet - a rapid nanobody modeling tool
+NanoNet - a rapid nanobody modeling tool. 
+for citation, please cite our paper: https://www.biorxiv.org/content/10.1101/2021.08.03.454917v1 (preprint) 
 
 
 How to run NanoNet from google Colaboratory:

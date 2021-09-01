@@ -1,0 +1,133 @@
+
+PULCHRA User's Manual
+---------------------
+PowerfUL CHain Restoration Algorithm
+Version 3.06
+
+Copyright (c) 2000-2009 Piotr Rotkiewicz
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+1. Introduction.
+
+PULCHRA is a program for reconstructing full-atom protein models from reduced
+representations. PULCHRA can read C-alpha only file and generate an all-atom
+output in a very short time. If the initial coordinates are distorted,
+PULCHRA will try to optimize the alpha carbon positions to generate
+a protein-like structure. Additionally, side chain centers of mass can be used
+together with alpha carbons to improve the quality of the reconstruction.
+
+
+2. Compiling PULCHRA.
+
+PULCHRA comes as a few C source files that can be compiled into a single
+executable. No external data files are necessary to run PULCHRA.
+
+To compile PULCHRA with ANSI-C compatible compiler, go to ./src
+subdirectory and type:
+
+cc -O3 -o pulchra pulchra.c pulchra_data.c -lm
+
+Because of the static table size, the compilation process can take several seconds.
+
+
+3. Using PULCHRA.
+
+There are three statically-compiled executables in the PULCHRA archive:
+Linux, OS X, and Windows versions, available in ./bin subdirectory.
+For security reasons, the Windows executable file is named "pulchra.ex_".
+You should rename the file to "pulchra.exe" before running
+the program. The executables were statically compiled using GNU C compiler.
+
+PULCHRA can read files in Protein Data Bank format (PDB).
+
+The simplest way of using PULCHRA is:
+
+./pulchra input.pdb
+
+An output file named "input.rebuilt.pdb" will be created as a result.
+
+To have a better overview of PULCHRA process, a verbose flag (-v) can be used:
+
+./pulchra -v input.pdb
+
+To display all available options, type:
+
+./pulchra
+
+
+
+4. PULCHRA options.
+
+The following options are recognized by PULCHRA:
+
+  -v : enables verbose text output (default: off)
+
+  -n : centers input chain coordinates to (0,0,0) (default: off)
+
+  -g : use PDB-SG as an input format ("CA" = alpha carbons, "SC" or "CM"  = side chain centers of mass)
+
+  -c : skips C-alpha positions optimization (default: on)
+
+  -p : auto-detects cis-prolins (default: off)
+
+  -u value : sets maximum shift from the initial coordinates (default: 0.5A)
+
+  -e : rearranges backbone atoms according to AMBER standard (C, O are output after side chain) (default: off)
+
+  -b : skips backbone reconstruction (default: on)
+
+  -q : optimizes backbone hydrogen bonds pattern, usually gaining a slightly better RMSD, but a little bit more time consuming (default: off)
+
+  -s : skips side chains reconstruction (default: on)
+
+  -o : doesn't attempt to fix excluded volume conflicts nor punched ring problems (default: on)
+
+  -z : doesn't check amino acid chirality (default: on)
+
+  -h : outputs hydrogen atoms (default: off)
+
+  -r : starts optimization from a random alpha carbon chain rather than from initial coordinates (default: off)
+
+  -x : time-seeds random number generator (default: off)
+
+  -t : saves chain optimization trajectory to a file <pdb_file.pdb.trajectory>
+
+  -i pdbfile : reads the initial C-alpha coordinates from a PDB file
+
+
+
+5. PDB format issues.
+
+- PULCHRA will read only first of the multiple occupancy sites (flag ' ' or 'A' in column 17).
+
+- PULCHRA will skip any non-protein residues. Following modified residue codes are
+recognized: HID, ASX, GLX, TPO, MSE.
+
+
+
+6. Contact and support.
+
+If you encounter issues with PULCHRA, please contact the author: piotr-at-pirx.com
+

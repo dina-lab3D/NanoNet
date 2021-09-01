@@ -154,16 +154,16 @@ if __name__ == '__main__':
     parser.add_argument("fasta", help="fasta file with Nbs sequences")
     parser.add_argument("-n", "--nanonet", help="path to NanoNet trained network (default: NanoNet)", type=str)
     parser.add_argument("-s", "--single_file", help="write all the models into a single PDB file with different models (good when predicting many structures, default: False)", action="store_true")
-    parser.add_argument("-o", "--output_dir", help="directory to put the predicted PDB models, (default: .)", type=str)
+    parser.add_argument("-o", "--output_dir", help="directory to put the predicted PDB models, (default: ./NanoNetResults)", type=str)
     parser.add_argument("-r", "--reconstruct", help="reconstruct the side chains using pulchra, (default: False)", action="store_true")
-    parser.add_argument("-p", "--pulchra", help="path to pulchra executable, in order to reconstruct the side chains, (default: pulchra)", type=str)
+    parser.add_argument("-p", "--pulchra", help="path to pulchra executable, in order to reconstruct the side chains, (default: ./pulchra_306/pulchra)", type=str)
     args = parser.parse_args()
 
     # check arguments
     fasta_path = args.fasta
     nanonet_path = args.nanonet if args.nanonet else "NanoNet"
     output_dir = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
-    run_pulchra = args.pulchra if args.pulchra else "pulchra"
+    run_pulchra = args.pulchra if args.pulchra else os.path.join("pulchra_306","pulchra")
 
     if not os.path.exists(fasta_path):
         print("Fasta file '{}' does not exist, aborting.".format(args.fasta), file=sys.stderr)

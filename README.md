@@ -4,7 +4,7 @@ NanoNet - a rapid nanobody modeling tool.
 for citation, please cite our paper: https://www.biorxiv.org/content/10.1101/2021.08.03.454917v1 (preprint) 
 
 
-How to run NanoNet from google Colaboratory:
+How to run NanoNet from google Colaboratory (currently doesn't support side chains reconstruction):
 
     1. Just make a copy of the Colab notebook (NanoNet.ipynb) in your drive.
     2. select protein type (Nb/mAb heavy chain or TCR VB).
@@ -20,22 +20,26 @@ How to run NanoNet locally:
             - numpy
             - tensorflow (2.4.0 or higher)
             - Bio
+            - modeller (requires license - https://salilab.org/modeller/)
 
-    3. If you want to construct the side chains, make sure you have 'PULCHRA' installed and compiled on your computer (https://www.pirx.com/pulchra/).
+    3. If you want to construct the side chains using Scwrl4, make sure you have it installed on your computer (requires license - http://dunbrack.fccc.edu/SCWRL3.php/).
 
     4. Run the following command (with python 3):
 
             python NanoNet.py <fasta file path>
 
-            this will produce a Ca pdb named '<record name>_nanonet_ca.pdb' for each record in the fasta file.
+            this will produce a backbone + cb pdb named '<record name>_nanonet_backbone_cb.pdb' for each record in the fasta file.
 
             options:
 
-                    -n <path to trained NanoNet> : a path to the trained model, default is 'NanoNet' (for TCR modeling use the path of 'NanoNetTCR')
                     -s : write all the models into a single PDB file, separated with MODEL and ENDMDL (reduces running time when predicting many structures), default is False.
                     -o <output directory> : path to a directory to put the generated models in, default is './NanoNetResults'
-                    -r : reconstruct side chains with pulchra, default is False
-                    -p <pulchra> : path to pulchra executable, in order to reconstruct the side chains, default is './pulchra_306/pulchra'
+                    -m : run side chains reconstruction using modeller, default is False. Output it to a pdb file named '<record name>_nanonet_full_relaxed.pdb'
+                    -c <path to Scwrl4 executable>: run side chains reconstruction using scwrl, default is False. Output it to a pdb file named '<record name>_nanonet_full.pdb'
+                    -t : use this parameter for TCR V-beta modeling, default is False
 
+Running times for 1,000 structures on a standard CPU: 
 
-Running time: under 20 seconds for 5,000 models written into a single PDB file, or under a minute written into separate PDB files on a standart CPU computer. for better preformance use GPU and cuda.
+only backbone + Cb - less than 15 seconds (For better preformance use GPU and cuda).
+backbone + SCWRL - about 20 minutes. 
+backbone + Modeller - about 80 minutes.

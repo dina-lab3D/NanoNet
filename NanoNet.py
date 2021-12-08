@@ -238,7 +238,7 @@ if __name__ == '__main__':
         print("Can't find Scwrl4 '{}', aborting.".format(scwrl_path), file=sys.stderr)
         exit(1)
     if args.single_file and (args.modeller or scwrl_path):
-        print("Can't reconstruct side chains with single_file option. remove flag -s".format(scwrl_path),file=sys.stderr)
+        print("Can't reconstruct side chains with single_file option. remove flag -s",file=sys.stderr)
         exit(1)
         
     start = timer()

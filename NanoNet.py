@@ -115,11 +115,12 @@ def make_alignment_file(pdb_name, sequence):
     """
     makes alignment file for modeller
     """
-    with open("temp_alignment.ali", "w") as ali_file:
-        ali_file.write(">P1;{}\n".format(pdb_name))
-        ali_file.write("sequence:{}:::::::0.00: 0.00\n".format(pdb_name))
-        ali_file.write("{}*\n".format(sequence))
-
+    ali_file =  open("temp_alignment.ali", "w")
+    ali_file.write(">P1;{}\n".format(pdb_name))
+    ali_file.write("sequence:{}:::::::0.00: 0.00\n".format(pdb_name))
+    ali_file.write("{}*\n".format(sequence))
+    ali_file.close()
+           
     pdb_file = "{}_nanonet_backbone_cb".format(pdb_name)
 
     env = environ()
@@ -191,20 +192,21 @@ def run_nanonet(fasta_path, nanonet_path, single_file, output_dir, modeller, scw
     # create one ca pdb file
     if single_file:
         backbone_file_path = "nanonet_backbone_cb.pdb"
-        with open(backbone_file_path, "w") as file:
-            file.write(HEADER.format(""))
-            for coords, sequence, name in (zip(backbone_coords, sequences, names)):
-                file.write("MODEL {}\n".format(name))
-                matrix_to_pdb(file, sequence, coords)
-                file.write("ENDMDL\n")
-
+        file = open(backbone_file_path, "w")
+        file.write(HEADER.format(""))
+        for coords, sequence, name in (zip(backbone_coords, sequences, names)):
+            file.write("MODEL {}\n".format(name))
+            matrix_to_pdb(file, sequence, coords)
+            file.write("ENDMDL\n")
+        file.close()
     # create many ca pdb files
     else:
         for coords, sequence, name in (zip(backbone_coords, sequences, names)):
             backbone_file_path = "{}_nanonet_backbone_cb.pdb".format(name)
-            with open(backbone_file_path, "w") as file:
-                file.write(HEADER.format(name))
-                matrix_to_pdb(file, sequence, coords)
+            file = open(backbone_file_path, "w")
+            file.write(HEADER.format(name))
+            matrix_to_pdb(file, sequence, coords)
+            file.close()
             if modeller:
                 relax_pdb(name, sequence)
             if scwrl:

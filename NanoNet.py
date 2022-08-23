@@ -95,10 +95,7 @@ def matrix_to_pdb(pdb_file, seq, coord_matrix):
                 third_space = (12 - len("{:.3f}".format(coord_matrix[aa][3*j]))) * " "
                 forth_space = (8 - len("{:.3f}".format(coord_matrix[aa][3*j+1]))) * " "
                 fifth_space = (8 - len("{:.3f}".format(coord_matrix[aa][3*j+2]))) * " "
-                if seq[aa] == "X":
-                    one_letter_code = "UNK"
-                else:
-                    one_letter_code = Polypeptide.one_to_three(seq[aa])
+                one_letter_code = "UNK" if seq[aa] == "X" else Polypeptide.one_to_three(seq[aa])
                 if seq[aa] == "G" and backbone[j] == "CB":
                     continue
                 else:
@@ -115,12 +112,11 @@ def make_alignment_file(pdb_name, sequence):
     """
     makes alignment file for modeller
     """
-    ali_file =  open("temp_alignment.ali", "w")
-    ali_file.write(">P1;{}\n".format(pdb_name))
-    ali_file.write("sequence:{}:::::::0.00: 0.00\n".format(pdb_name))
-    ali_file.write("{}*\n".format(sequence))
-    ali_file.close()
-           
+    with open("temp_alignment.ali", "w") as ali_file:
+        ali_file.write(">P1;{}\n".format(pdb_name))
+        ali_file.write("sequence:{}:::::::0.00: 0.00\n".format(pdb_name))
+        ali_file.write("{}*\n".format(sequence))
+
     pdb_file = "{}_nanonet_backbone_cb".format(pdb_name)
 
     env = environ()
@@ -192,21 +188,20 @@ def run_nanonet(fasta_path, nanonet_path, single_file, output_dir, modeller, scw
     # create one ca pdb file
     if single_file:
         backbone_file_path = "nanonet_backbone_cb.pdb"
-        file = open(backbone_file_path, "w")
-        file.write(HEADER.format(""))
-        for coords, sequence, name in (zip(backbone_coords, sequences, names)):
-            file.write("MODEL {}\n".format(name))
-            matrix_to_pdb(file, sequence, coords)
-            file.write("ENDMDL\n")
-        file.close()
+        with open(backbone_file_path, "w") as file:
+            file.write(HEADER.format(""))
+            for coords, sequence, name in (zip(backbone_coords, sequences, names)):
+                file.write("MODEL {}\n".format(name))
+                matrix_to_pdb(file, sequence, coords)
+                file.write("ENDMDL\n")
+
     # create many ca pdb files
     else:
         for coords, sequence, name in (zip(backbone_coords, sequences, names)):
             backbone_file_path = "{}_nanonet_backbone_cb.pdb".format(name)
-            file = open(backbone_file_path, "w")
-            file.write(HEADER.format(name))
-            matrix_to_pdb(file, sequence, coords)
-            file.close()
+            with open(backbone_file_path, "w") as file:
+                file.write(HEADER.format(name))
+                matrix_to_pdb(file, sequence, coords)
             if modeller:
                 relax_pdb(name, sequence)
             if scwrl:
@@ -226,31 +221,24 @@ if __name__ == '__main__':
 
     # check arguments
     nanonet_dir_path = os.path.abspath(os.path.dirname(sys.argv[0]))
-    nanonet_model = os.path.join(nanonet_dir_path, 'NanoNet')
-    scwrl_path = None
-    output_directory = os.path.join(".","NanoNetResults")
-    
-    if args.tcr:
-        nanonet_model = os.path.join(nanonet_dir_path, 'NanoNetTCR')
-    if args.scwrl:
-        scwrl_path = os.path.abspath(args.scwrl)
-    if args.output_dir:
-        output_directory = args.output_dir
+    nanonet_model = os.path.join(nanonet_dir_path, 'NanoNetTCR') if args.tcr else os.path.join(nanonet_dir_path, 'NanoNet')
+    scwrl_path = os.path.abspath(args.scwrl) if args.scwrl else None
+    output_directory = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
 
     if args.modeller:
         from modeller import *
         from modeller.automodel import *
     if not os.path.exists(args.fasta):
-        sys.stderr.write("Can't find fasta file '{}', aborting.".format(args.fasta))
+        print("Can't find fasta file '{}', aborting.".format(args.fasta), file=sys.stderr)
         exit(1)
     if not os.path.exists(nanonet_model):
-        sys.stderr.write("Can't find trained NanoNet '{}', aborting.".format(nanonet_model))
+        print("Can't find trained NanoNet '{}', aborting.".format(nanonet_model), file=sys.stderr)
         exit(1)
     if scwrl_path and not os.path.exists(scwrl_path):
-        sys.stderr.write("Can't find Scwrl4 '{}', aborting.".format(scwrl_path))
+        print("Can't find Scwrl4 '{}', aborting.".format(scwrl_path), file=sys.stderr)
         exit(1)
     if args.single_file and (args.modeller or scwrl_path):
-        sys.stderr.write("Can't reconstruct side chains with single_file option. remove flag -s")
+        print("Can't reconstruct side chains with single_file option. remove flag -s",file=sys.stderr)
         exit(1)
         
     start = timer()

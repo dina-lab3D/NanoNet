@@ -241,16 +241,16 @@ if __name__ == '__main__':
         from modeller import *
         from modeller.automodel import *
     if not os.path.exists(args.fasta):
-        print("Can't find fasta file '{}', aborting.".format(args.fasta), file=sys.stderr)
+        sys.stderr.write("Can't find fasta file '{}', aborting.".format(args.fasta))
         exit(1)
     if not os.path.exists(nanonet_model):
-        print("Can't find trained NanoNet '{}', aborting.".format(nanonet_model), file=sys.stderr)
+        sys.stderr.write("Can't find trained NanoNet '{}', aborting.".format(nanonet_model))
         exit(1)
     if scwrl_path and not os.path.exists(scwrl_path):
-        print("Can't find Scwrl4 '{}', aborting.".format(scwrl_path), file=sys.stderr)
+        sys.stderr.write("Can't find Scwrl4 '{}', aborting.".format(scwrl_path))
         exit(1)
     if args.single_file and (args.modeller or scwrl_path):
-        print("Can't reconstruct side chains with single_file option. remove flag -s",file=sys.stderr)
+        sys.stderr.write("Can't reconstruct side chains with single_file option. remove flag -s")
         exit(1)
         
     start = timer()

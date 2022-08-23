@@ -95,7 +95,10 @@ def matrix_to_pdb(pdb_file, seq, coord_matrix):
                 third_space = (12 - len("{:.3f}".format(coord_matrix[aa][3*j]))) * " "
                 forth_space = (8 - len("{:.3f}".format(coord_matrix[aa][3*j+1]))) * " "
                 fifth_space = (8 - len("{:.3f}".format(coord_matrix[aa][3*j+2]))) * " "
-                one_letter_code = "UNK" if seq[aa] == "X" else Polypeptide.one_to_three(seq[aa])
+                if seq[aa] == "X":
+                    one_letter_code = "UNK"
+                else:
+                    one_letter_code = Polypeptide.one_to_three(seq[aa])
                 if seq[aa] == "G" and backbone[j] == "CB":
                     continue
                 else:
@@ -221,9 +224,16 @@ if __name__ == '__main__':
 
     # check arguments
     nanonet_dir_path = os.path.abspath(os.path.dirname(sys.argv[0]))
-    nanonet_model = os.path.join(nanonet_dir_path, 'NanoNetTCR') if args.tcr else os.path.join(nanonet_dir_path, 'NanoNet')
-    scwrl_path = os.path.abspath(args.scwrl) if args.scwrl else None
-    output_directory = args.output_dir if args.output_dir else os.path.join(".","NanoNetResults")
+    nanonet_model = os.path.join(nanonet_dir_path, 'NanoNet')
+    scwrl_path = None
+    output_directory = os.path.join(".","NanoNetResults")
+    
+    if args.tcr:
+        nanonet_model = os.path.join(nanonet_dir_path, 'NanoNetTCR')
+    if args.scwrl:
+        scwrl_path = os.path.abspath(args.scwrl)
+    if args.output_dir:
+        output_directory = args.output_dir
 
     if args.modeller:
         from modeller import *

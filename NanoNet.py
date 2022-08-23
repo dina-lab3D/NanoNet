@@ -166,7 +166,7 @@ def run_nanonet(fasta_path, nanonet_path, single_file, output_dir, modeller, scw
 #     i = 0
     for sequence, name in seq_iterator(fasta_path):
         sequences.append(sequence)
-        names.append(name + str(i))
+        names.append(name)
 #         i += 1
 
     input_matrix = np.zeros((len(sequences), NB_MAX_LENGTH, FEATURE_NUM))

@@ -1,16 +1,16 @@
 # NanoNet
 
 NanoNet - a rapid nanobody modeling tool. 
-for citation, please cite our paper: https://www.biorxiv.org/content/10.1101/2021.08.03.454917v1 (preprint) 
+for citation, please cite our paper: https://www.frontiersin.org/articles/10.3389/fimmu.2022.958584/full
 
+How to run NanoNet from google Colaboratory:
 
-How to run NanoNet from google Colaboratory (currently doesn't support side chains reconstruction):
-
-    1. Just make a copy of the Colab notebook (NanoNet.ipynb) in your drive.
-    2. select protein type (Nb/mAb heavy chain or TCR VB).
-    3. select input type (sequence or path to a fasta file)
-    4. Provide Nb sequence/fasta.
-    5. Press the 'Run all' option.
+    1. Open the Colab notebook (NanoNet.ipynb).
+    2. Select protein type (Nb/mAb heavy chain or TCR VB).
+    3. Select input type (sequence or path to a fasta file)
+    4. Provide a Nb sequence/fasta.
+    5. Select whether or not you want to reconstruct the side chains.
+    6. Press the 'Run all' option.
 
 How to run NanoNet locally:
 
@@ -38,7 +38,7 @@ How to run NanoNet locally:
                     -c <path to Scwrl4 executable>: run side chains reconstruction using scwrl, default is False. Output it to a pdb file named '<record name>_nanonet_full.pdb'
                     -t : use this parameter for TCR V-beta modeling, default is False
 
-Running times for 1,000 structures on a standard CPU: 
+Running times for 1,000 structures on a single standard CPU: 
 
 only backbone + Cb - less than 15 seconds (For better preformance use GPU and cuda).
 backbone + SCWRL - about 20 minutes. 

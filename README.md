@@ -7,10 +7,10 @@ NanoNet - a rapid nanobody modeling tool.
 for citation, please cite our paper: https://www.frontiersin.org/articles/10.3389/fimmu.2022.958584/full
 
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb)
 
 How to run NanoNet from google Colaboratory:
 
-    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb)
     1. Open the Colab notebook (NanoNet.ipynb, link above).
     2. Select protein type (Nb/mAb heavy chain or TCR VB).
     3. Select input type (sequence (String) or path to a fasta file)

@@ -6,15 +6,16 @@
 NanoNet - a rapid nanobody modeling tool. 
 for citation, please cite our paper: https://www.frontiersin.org/articles/10.3389/fimmu.2022.958584/full
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb)
+
 
 How to run NanoNet from google Colaboratory:
 
-    1. Open the Colab notebook (NanoNet.ipynb).
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb)
+    1. Open the Colab notebook (NanoNet.ipynb, link above).
     2. Select protein type (Nb/mAb heavy chain or TCR VB).
-    3. Select input type (sequence or path to a fasta file)
-    4. Provide a Nb sequence/fasta.
-    5. Select whether or not you want to reconstruct the side chains.
+    3. Select input type (sequence (String) or path to a fasta file)
+    4. Provide a Nb sequence/fasta (NanoNet will preduce a model for each entry in the fasta file).
+    5. Select whether or not you want to reconstruct the side chains using modeller (requires license - https://salilab.org/modeller/).
     6. Press the 'Run all' option.
 
 How to run NanoNet locally:
@@ -25,9 +26,9 @@ How to run NanoNet locally:
             - numpy
             - tensorflow (2.4.0 or higher)
             - Bio
-            - modeller (requires license - https://salilab.org/modeller/)
+            - modeller (optional, only if you want to reconstruct the side chains using modeller, requires license - https://salilab.org/modeller/)
 
-    3. If you want to construct the side chains using Scwrl4, make sure you have it installed on your computer (requires license - http://dunbrack.fccc.edu/SCWRL3.php/).
+    3. If you want to reconstruct the side chains using Scwrl4, make sure you have it installed on your computer (requires license - http://dunbrack.fccc.edu/SCWRL3.php/).
 
     4. Run the following command (with python 3):
 

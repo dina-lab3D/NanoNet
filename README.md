@@ -8,7 +8,7 @@ for citation, please cite our paper: https://www.frontiersin.org/articles/10.338
 
 How to run NanoNet from google Colaboratory:
 
-    1. Open the Colab notebook (NanoNet.ipynb).
+    1. Open the Colab notebook (NanoNet.ipynb) - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb).
     2. Select protein type (Nb/mAb heavy chain or TCR VB).
     3. Select input type (sequence or path to a fasta file)
     4. Provide a Nb sequence/fasta.

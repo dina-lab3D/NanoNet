@@ -9,6 +9,8 @@ for citation, please cite our paper: https://www.frontiersin.org/articles/10.338
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dina-lab3D/NanoNet/blob/main/NanoNet.ipynb)
 
+**NEW** - You can now run NanoNet predictions using our webserver, https://bio3d.cs.huji.ac.il/nanonet/ 
+
 How to run NanoNet from google Colaboratory:
 
     1. Open the Colab notebook (NanoNet.ipynb, link above).
